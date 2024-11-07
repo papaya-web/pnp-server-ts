@@ -6,14 +6,17 @@ export class PNPServer {
 	private readonly encryption: PNPEncryption;
 	private router: PNPRouter;
 	
-	constructor(router: PNPRouter) {
+	constructor(router: PNPRouter, key: Buffer, iv: Buffer) {
 		this.server = createServer(this.handleConnection.bind(this));
-		this.encryption = new PNPEncryption();
+		this.encryption = new PNPEncryption(key, iv);
 		this.router = router;
 	}
 	
 	public listen(port: number, callback: () => void) {
 		this.server.listen(port, callback);
+		this.server.on("error", (err) => {
+			console.error(`Caught an error: ${err.message}`);
+		});
 	}
 	
 	private handleConnection(socket: Socket) {
@@ -23,6 +26,9 @@ export class PNPServer {
 			const response = this.createEmptyResponse();
 			
 			this.router.route(request, response, socket, this.encryption);
+		});
+		socket.on("error", (err) => {
+			console.error(`Caught error with a connection(${socket.remoteAddress}): ${err.message}`);
 		});
 	}
 	

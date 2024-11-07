@@ -1,6 +1,6 @@
 {
 	"name": "@papaya-web/pnp-server",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"description": "PNP Server library for the Papaya Web",
 	"main": "dist/PapayaServer.js",
 	"types": "dist/PapayaServer.d.ts",
@@ -14,7 +14,7 @@
 	"author": "dbeny",
 	"license": "MIT",
 	"dependencies": {
-		"@papaya-web/pnp-client": "^1.0.4"
+		"@papaya-web/pnp-client": "^1.0.6"
 	},
 	"devDependencies": {
 		"@types/node": "^22.9.0",
